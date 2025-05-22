@@ -36,13 +36,13 @@
     // Once all dependencies are fetched, `zig build` no longer requires
     // internet connectivity.
     .dependencies = .{
-        .zli = .{
-            .url = "https://github.com/xcaeser/zli/archive/v3.1.6.tar.gz",
-            .hash = "zli-3.1.5-LeUjpoOLAADTLQdvycsfy0Ryip1G6DhjfQOLUuHQ3kRK",
-        },
         .curl = .{
             .url = "https://github.com/jiacai2050/zig-curl/archive/refs/tags/v0.2.0.tar.gz",
             .hash = "curl-0.2.0-P4tT4UfOAADebEpwArAmrbS8Bzdxnh6PEmtHhbTLdxaG",
+        },
+        .zli = .{
+            .url = "https://github.com/xcaeser/zli/archive/v3.2.0.tar.gz",
+            .hash = "zli-3.2.0-LeUjpjKEAAB9DyJnz6xdfkKjyYtsKWuZyqa4rBb-XonX",
         },
     },
     .paths = .{

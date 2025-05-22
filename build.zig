@@ -16,7 +16,7 @@ pub fn build(b: *std.Build) void {
     });
 
     const exe = b.addExecutable(.{
-        .name = "zvault",
+        .name = "zest",
         .root_module = exe_mod,
     });
 
