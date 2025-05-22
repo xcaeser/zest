@@ -11,10 +11,8 @@ It draws inspiration from [Homebrew](https://brew.sh), aiming for simplicity, cl
 
 </div>
 
-## [!IMPORTANT]
-
-**This project is in exploration phase.**
-
+> [!IMPORTANT]
+> **This project is in exploration phase.**
 > APIs, structure, and behavior may change significantly.
 > Not production-ready. Use at your own risk.
 
