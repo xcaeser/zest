@@ -5,6 +5,8 @@ pub fn build(b: *std.Build) void {
 
     const optimize = b.standardOptimizeOption(.{ .preferred_optimize_mode = .ReleaseSafe });
 
+    // ------------DEPENDENCIES------------
+    const curl_dep = b.dependency("curl", .{ .target = target, .optimize = optimize });
     const zli_dep = b.dependency("zli", .{ .target = target });
 
     const exe_mod = b.createModule(.{
@@ -18,6 +20,7 @@ pub fn build(b: *std.Build) void {
         .root_module = exe_mod,
     });
 
+    exe.root_module.addImport("curl", curl_dep.module("curl"));
     exe.root_module.addImport("zli", zli_dep.module("zli"));
     b.installArtifact(exe);
 
