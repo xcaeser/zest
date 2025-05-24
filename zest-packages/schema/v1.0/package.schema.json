@@ -56,7 +56,7 @@
     },
     "downloads": {
       "type": "object",
-      "description": "Per-platform downloadable package binaries. Keys like 'linux-x64', 'macos-arm64'.",
+      "description": "Per-platform downloadable package binaries. Keys are macos-arm64, macos-x64, linux-arm64 linux-x64, windows-x64, windows-x86",
       "patternProperties": {
         "^(macos|linux|windows)-(arm64|x64|x86)$": {
           "$ref": "#/$defs/download"
