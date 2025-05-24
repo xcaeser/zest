@@ -1,0 +1,182 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://zest-pkg.org/schema/v1.0/package.schema.json",
+  "title": "Zest Package Definition v1.0",
+  "type": "object",
+  "required": [
+    "name",
+    "version",
+    "description",
+    "license",
+    "downloads",
+    "install"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Unique package name (lowercase, use hyphens if needed). Example: 'bun', 'my-tool'"
+    },
+    "version": {
+      "type": "string",
+      "description": "Semantic version in 'MAJOR.MINOR.PATCH' format. Example: '1.2.0', '0.9.1-beta'",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-zA-Z0-9-]+)?$"
+    },
+    "description": {
+      "type": "string",
+      "description": "1-2 sentence summary of what the package does. Keep it short and clear."
+    },
+    "license": {
+      "type": "string",
+      "description": "License identifier (e.g., 'MIT', 'Apache-2.0', 'GPL-3.0'). Choose one from SPDX."
+    },
+    "maintainer": {
+      "type": "string",
+      "description": "Person or organization responsible. Format: 'name' or 'name <email>'"
+    },
+    "homepage": {
+      "type": "string",
+      "format": "uri",
+      "description": "Main URL for the project, repo, or docs. Example: 'https://bun.sh'"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional. Keywords to help categorize the package. Example: ['runtime', 'javascript']"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional. Other packages this one depends on. Example: ['libssl', 'zlib']"
+    },
+    "conflicts": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional. Packages that must not be installed with this one."
+    },
+    "downloads": {
+      "type": "object",
+      "description": "Per-platform downloadable package binaries. Keys like 'linux-x64', 'macos-arm64'.",
+      "patternProperties": {
+        "^(macos|linux|windows)-(arm64|x64|x86)$": {
+          "$ref": "#/$defs/download"
+        }
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "$ref": "#/$defs/download",
+      "description": "Optional. Tarball or zip URL for the source code, for building from source."
+    },
+    "install": {
+      "type": "object",
+      "description": "Platform-specific install instructions. Each key (linux, macos, windows) maps to one install method.",
+      "patternProperties": {
+        "^(linux|macos|windows)$": {
+          "oneOf": [
+            { "$ref": "#/$defs/binaryInstall" },
+            { "$ref": "#/$defs/sourceInstall" },
+            { "$ref": "#/$defs/scriptInstall" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "download": {
+      "type": "object",
+      "required": ["url", "sha256"],
+      "description": "Downloadable package file. Contains URL, checksum, and optional size.",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Direct download URL to a .zip/.tar.gz/.exe/etc file."
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "SHA-256 checksum for verifying the file. Use shasum or openssl to generate it."
+        },
+        "size": {
+          "type": "integer",
+          "description": "Optional. Size of the file in bytes (for display or validation)."
+        }
+      }
+    },
+    "binaryInstall": {
+      "type": "object",
+      "required": ["type", "binary"],
+      "description": "Install pre-built binary packages. Suitable for tools that provide ready-to-use executables.",
+      "properties": {
+        "type": { "const": "binary" },
+        "binary": {
+          "type": "string",
+          "description": "Name of the main executable to install. Example: 'bun'"
+        },
+        "binaries": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Optional. List of additional binaries to install."
+        },
+        "strip_components": {
+          "type": "integer",
+          "default": 0,
+          "description": "Optional. Use when archive contents are nested. 1 removes top-level folder, etc."
+        },
+        "post_install": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Optional. Shell commands to run after install. Example: ['bun --help']"
+        }
+      }
+    },
+    "sourceInstall": {
+      "type": "object",
+      "required": ["type", "build_commands"],
+      "description": "Install from source code. Requires build tools like make, gcc, etc.",
+      "properties": {
+        "type": { "const": "source" },
+        "build_commands": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Required. Shell commands to build from source. Example: ['make', 'make install']"
+        },
+        "configure_args": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Optional. Args passed to './configure' step."
+        },
+        "make_args": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Optional. Args passed to 'make'."
+        },
+        "install_args": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Optional. Args passed to 'make install'."
+        }
+      }
+    },
+    "scriptInstall": {
+      "type": "object",
+      "required": ["type", "script"],
+      "description": "Install using a shell or PowerShell script. Useful for tools that provide their own install scripts.",
+      "properties": {
+        "type": {
+          "const": "script"
+        },
+        "script": {
+          "type": "string",
+          "description": "URL or local path to a shell or PowerShell install script. Example: 'https://bun.sh/install'"
+        },
+        "args": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Optional. Arguments passed to the script. Leave empty if not needed."
+        }
+      }
+    }
+  }
+}

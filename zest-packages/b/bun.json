@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema/v1.0/package.schema.json",
+  "name": "bun",
+  "version": "1.2.14",
+  "description": "Bun is a fast JavaScript toolkit, runtime and package manager",
+  "license": "LGPL-2",
+  "homepage": "https://bun.sh",
+  "downloads": {},
+  "install": {
+    "macos": {
+      "type": "script",
+      "script": "https://bun.sh/install"
+    },
+    "linux": {
+      "type": "script",
+      "script": "https://bun.sh/install"
+    },
+    "windows": {
+      "type": "script",
+      "script": "https://bun.sh/install.ps1"
+    }
+  }
+}
