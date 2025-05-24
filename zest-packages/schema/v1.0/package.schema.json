@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://zest-pkg.org/schema/v1.0/package.schema.json",
   "title": "Zest Package Definition v1.0",
+  "description": "Schema for defining Zest packages. This describes the metadata, dependencies, and install instructions for a package in the Zest ecosystem.",
   "type": "object",
   "required": [
     "name",
