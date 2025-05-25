@@ -41,8 +41,8 @@
             .hash = "curl-0.2.0-P4tT4UfOAADebEpwArAmrbS8Bzdxnh6PEmtHhbTLdxaG",
         },
         .zli = .{
-            .url = "https://github.com/xcaeser/zli/archive/v3.5.0.tar.gz",
-            .hash = "zli-3.5.0-LeUjpjSwAAAzLQbiXdao8EMpH96YnH7MgLIwnn9u4KJ5",
+            .url = "https://github.com/xcaeser/zli/archive/v3.5.1.tar.gz",
+            .hash = "zli-3.5.1-LeUjpmuvAADjomvdF0Ufitt7U3SQB9bjzUK5agV5OqUY",
         },
     },
     .paths = .{
